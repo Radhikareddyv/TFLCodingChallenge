@@ -53,9 +53,11 @@ Scenario Outline: Verify ChangeTime link on the journey Planner page
 	When I enter a valid departure location <FromLocation>
 	And I enter a valid arrival location <ToLocation>
 	When I click change time link
-	Then  Arriving option is disapled
+	Then  Arriving option is disaplayed
+	And I edit the Arriving time
 	When I click plan my journey
-	
+	Then verify the journey results for the valid locations
+	Then Verify Arriving time on Journey results page
 
 	 Examples::
 	| FromLocation	   | ToLocation	 |

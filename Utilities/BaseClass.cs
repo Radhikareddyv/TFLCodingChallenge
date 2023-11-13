@@ -168,7 +168,19 @@ namespace TFLCodingChallenge.Utilities
                 return false;
             }
         }
-      
+
+        public string GetElementLabelText(IWebElement element, double waitTime = defaultWait)
+        {
+            try
+            {
+                string elementLabelText = element.Text;
+                return elementLabelText;
+            }
+            catch (WebDriverException)
+            {
+                return null;
+            }
+        }
     }
 
 

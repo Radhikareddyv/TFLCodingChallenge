@@ -1,6 +1,8 @@
-﻿using OpenQA.Selenium;
+﻿using Microsoft.VisualBasic.FileIO;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,30 +16,34 @@ namespace TFLCodingChallenge.PageObjects
         private IWebDriver driver;
         private ScenarioContext scenarioContext;
 
-        public JourneyResultsPage(IWebDriver driver,ScenarioContext context) : base(driver)
+        public JourneyResultsPage(IWebDriver driver, ScenarioContext context) : base(driver)
         {
             this.driver = driver;
             this.scenarioContext = context;
         }
 
         private By _journeyResults = By.XPath("//div[@class='summary-results publictransport not-cycle-hire']");
-        private  By _options_Departure(string departure) =>  By.XPath($"//span[contains(text(),'{departure}')]");
-        private  By _options_Arrival(string arrival) => By.XPath($"//span[contains(text(),'{arrival}')]");
+        private By _options_Departure(string departure) => By.XPath($"//span[contains(text(),'{departure}')]");
+        private By _options_Arrival(string arrival) => By.XPath($"//span[contains(text(),'{arrival}')]");
         private readonly By _editJourneyButton = By.CssSelector(".edit-journey");
         private readonly By _clearLocation = By.XPath("//a[text()='Clear From location']");
         private readonly By _departureStation = By.XPath("//input[@id='InputFrom']");
         private readonly By _updateJourneyButton = By.Id("plan-journey-button");
 
         private By _noResultsfound = By.CssSelector(".field-validation-errors");
-        private readonly By _updatedFromLocation = By.XPath("//span[@class='notranslate']");
+        private readonly By _fromJourneyResult = By.XPath("//span[@class='notranslate']");
+        private readonly By _journeysummary = By.XPath("//div[@class='summary-row clearfix']");
+
         public void VerifyResults()
         {
             Assert.IsTrue(IsElementExist(_journeyResults, 50000));
-            var elementText = ReturnMultipleElements(_updatedFromLocation).First().Text;
+            var selectedDeparturePoint = ReturnMultipleElements(_fromJourneyResult).First().Text;
+            var actualDeparturePoint = scenarioContext.Get<string>("departurePoint");
+            Assert.That(actualDeparturePoint.Equals(selectedDeparturePoint));
 
-            var text = scenarioContext.Get<string>("departurePoint");
-
-         
+            var selectedArrivalPoint = ReturnMultipleElements(_fromJourneyResult)[1].Text;
+            var actualArrivalPoint = scenarioContext.Get<string>("arrivalPoint");
+            Assert.That(actualArrivalPoint.Equals(selectedArrivalPoint));
         }
 
         public void GetAllJourneyResults_departure(string departure)
@@ -45,7 +51,7 @@ namespace TFLCodingChallenge.PageObjects
             WaitForAllElementsBy(_options_Departure(departure));
             Thread.Sleep(10000);
             ReturnMultipleElements(_options_Departure(departure)).First().Click();
-           
+
         }
         public void GetAllJourneyResults_arrival(string arrival)
         {
@@ -58,7 +64,7 @@ namespace TFLCodingChallenge.PageObjects
             Assert.IsTrue(IsElementExist(_noResultsfound, 5000));
             string errorMessage = GetElement(_noResultsfound).Text;
             string actualText = "Sorry, we can't find a journey matching your criteria";
-            Assert.AreEqual(errorMessage,actualText);
+            Assert.AreEqual(errorMessage, actualText);
         }
 
         public void ClickEditJourneyButton()
@@ -80,10 +86,26 @@ namespace TFLCodingChallenge.PageObjects
 
         public void VerifyUpdatedJourney(string updatedLocation)
         {
-            var elementText=ReturnMultipleElements(_updatedFromLocation).First().Text;
+            var elementText = ReturnMultipleElements(_fromJourneyResult).First().Text;
             Assert.AreEqual(updatedLocation, elementText);
         }
-    }
-    }
 
+        public void VerifyArrvingTime()
+        {
+            var summaryTime = "";
+            var journeySummary = ReturnMultipleElements(_journeysummary);
+            var updatedTimeText = scenarioContext.Get<string>("updatedTime");
+            foreach (var summary in journeySummary)
+            {
+                if (summary.Text.Contains(updatedTimeText))
+                {
+                    summaryTime = GetElementLabelText(summary);
+                }
+            }
+            Assert.IsTrue(summaryTime.Contains(updatedTimeText));
+        }
+    }
+}
+    
+    
 

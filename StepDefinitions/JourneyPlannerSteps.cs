@@ -45,11 +45,17 @@ namespace TFLCodingChallenge.StepDefinitions
             HomePage.AddToLocation(arrival);
         }
 
-        [Then(@"Arriving option is disapled")]
-        public void ThenArrivingOptionIsDisapled()
+        [Then(@"Arriving option is disaplayed")]
+        public void ThenArrivingOptionIsDisaplayed()
         {
             HomePage.VerifyArrivalOption();
 
+        }
+
+        [Then(@"I edit the Arriving time")]
+        public void ThenIEditTheArrivingTime()
+        {
+            HomePage.EditArrivingTime();
         }
 
 
@@ -77,7 +83,14 @@ namespace TFLCodingChallenge.StepDefinitions
         {
             JourneyResultsPage.VerifyResults();
         }
-    
+
+        [Then(@"Verify Arriving time on Journey results page")]
+        public void ThenVerifyArrivingTimeOnJourneyResultsPage()
+        {
+            JourneyResultsPage.VerifyArrvingTime();
+        }
+
+
 
         [When(@"I click first journey for  departure (.*)")]
         public void WhenIClickFirstJourneyForDepartureWaterloo(string departure)

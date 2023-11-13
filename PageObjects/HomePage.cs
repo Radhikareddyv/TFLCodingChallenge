@@ -30,6 +30,9 @@ namespace TFLCodingChallenge.PageObjects
         private readonly By _arrivalInputErrorMessage = By.XPath("//span[@id='InputTo-error']");
         private readonly By _ChangeTime = By.XPath("//a[@class='change-departure-time']");
         private readonly By _arrivingOption = By.XPath("//label[text()='Arriving']");
+        private readonly By _options_dropdownLocations_Time = By.XPath("//select[@id='Time']//option");
+
+
         public void JourneyPlanner(string departure,string arrival)
         {
             GetElement(_departureStation).SendKeys(departure);
@@ -51,11 +54,12 @@ namespace TFLCodingChallenge.PageObjects
            
             GetElement(_departureStation).SendKeys(departure);
             IList<IWebElement> options_dropdownLocations_Departure = WaitForAllElementsBy(_options_DropdownLocations_Departure);
+            string departurePoint = options_dropdownLocations_Departure.First().Text;
             var numofsuggestions = options_dropdownLocations_Departure.Count;
             options_dropdownLocations_Departure.First().Click();
-            string departurePoint = GetElement(_departureStation).Text;
-            //string departurePoint = options_dropdownLocations_Departure[1].Text;
-            scenarioContext.Set("departurePoint", departurePoint);
+            //string departurePoint = GetElement(_departureStation).Text;
+            
+            scenarioContext.Add("departurePoint", departurePoint);
             // GetDropDownOptionElements(_options_dropdownLocations_Departure).First().Click();
             GetElement(_departureStation).SendKeys(Keys.Enter);
 
@@ -65,8 +69,10 @@ namespace TFLCodingChallenge.PageObjects
         {
             GetElement(_arrivalStation).SendKeys(arrival);
             IList<IWebElement> options_dropdownLocations_arrival = WaitForAllElementsBy(_options_dropdownLocations_arrival);
-            var numofsuggestions = options_dropdownLocations_arrival.Count;
+            string arrivalPoint = options_dropdownLocations_arrival.First().Text;
+            //var numofsuggestions = options_dropdownLocations_arrival.Count;
             options_dropdownLocations_arrival.First().Click();
+            scenarioContext.Add("arrivalPoint", arrivalPoint);
             // GetDropDownOptionElements(_options_dropdownLocations_Departure).First().Click();
         }
 
@@ -94,6 +100,15 @@ namespace TFLCodingChallenge.PageObjects
             Assert.IsTrue(GetElement(_arrivingOption).Displayed);
             ClickElement(GetElement(_arrivingOption));
             DateTime now = DateTime.Now;
+        }
+
+        public void EditArrivingTime()
+        {
+            IList<IWebElement> options_dropdownLocations_Time = WaitForAllElementsBy(_options_dropdownLocations_Time);
+            var updatedTime = options_dropdownLocations_Time.First().Text;
+            scenarioContext.Add("updatedTime", updatedTime);
+            //GetDropDownOptionElements(options_dropdownLocations_Time).First().Click();
+            options_dropdownLocations_Time.First().Click();
         }
     }
 }
