@@ -11,6 +11,7 @@ namespace TFLCodingChallenge.Utilities
     {
         private readonly IWebDriver _driver;
         public const double defaultWait = 3000;
+      
 
         public BaseClass(IWebDriver driver)
         {
@@ -50,6 +51,14 @@ namespace TFLCodingChallenge.Utilities
             }
         }
 
+        public void ClickElementJS(By locator, double defaultWait = defaultWait)
+        {
+            WaitUntilElementToBeClickable(locator, defaultWait);
+            var element = _driver.FindElement(locator);
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)_driver;
+            executor.ExecuteScript("arguments[0].click();", element);
+        }
+
         public void ClickElement(IWebElement element, double defaultWait = defaultWait)
         {
             try
@@ -61,6 +70,11 @@ namespace TFLCodingChallenge.Utilities
             {
                 throw new WebDriverException("Error when trying to click on element \n" + e);
             }
+        }
+
+        public void WaitUntilElementToBeClickable(By locator, double waitTime = defaultWait)
+        {
+            BaseWebDriverWait(waitTime).Until(ExpectedConditions.ElementToBeClickable(locator));
         }
 
         public void WaitUntilElementToBeClickable(IWebElement element, double waitTime = defaultWait)
@@ -82,6 +96,11 @@ namespace TFLCodingChallenge.Utilities
             {
                 return null;
             }
+        }
+
+        public void WaitUntilVisibilityOfAllElementsLocatedBy(By locator, double waitTime = defaultWait)
+        {
+            BaseWebDriverWait(waitTime).Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(locator));
         }
 
         public IList<IWebElement> GetDropDownOptionElements(By locator, double waitTime = defaultWait)
@@ -149,6 +168,7 @@ namespace TFLCodingChallenge.Utilities
                 return false;
             }
         }
+      
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using TechTalk.SpecFlow;
 using TFLCodingChallenge.Utilities;
 
 namespace TFLCodingChallenge.PageObjects
@@ -9,12 +10,13 @@ namespace TFLCodingChallenge.PageObjects
         public HomePage HomePage;
         public JourneyResultsPage JourneyResultsPage;
 
-        public BasePage(IWebDriver driver) : base(driver)
+
+        public BasePage(IWebDriver driver,ScenarioContext context) : base(driver)
         {
 
             ConfigData = Hooks.GetApplicationConfiguration();
-            HomePage = new HomePage(driver);
-            JourneyResultsPage = new JourneyResultsPage(driver);
+            HomePage = new HomePage(driver,context);
+            JourneyResultsPage = new JourneyResultsPage(driver, context);
         }
 
         private readonly By cookieAcceptBtnLocator = By.Id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll");

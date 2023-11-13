@@ -15,11 +15,13 @@ namespace TFLCodingChallenge.StepDefinitions
     public class JourneyPlannerSteps : BasePage
     {
         private readonly ScenarioSettings _scenarioSettings;
-       
-        public JourneyPlannerSteps(IWebDriver driver, ScenarioSettings scenarioSettings) : base(driver)
+        private readonly ScenarioContext scenariocontext;
+
+        public JourneyPlannerSteps(IWebDriver driver, ScenarioSettings scenarioSettings,ScenarioContext context) : base(driver,context)
         {
             ConfigData = Hooks.GetApplicationConfiguration();
             _scenarioSettings = scenarioSettings;
+            scenariocontext = context;
           
         }
         [Given(@"I navigated to TFL website")]
@@ -35,11 +37,7 @@ namespace TFLCodingChallenge.StepDefinitions
             HomePage.AddFromLocation(departure);
         }
 
-        [When(@"I click first journey from the journey results")]
-        public void WhenIClickFirstJourneyFromTheJourneyResults()
-        {
-            JourneyResultsPage.GetAllJourneyResults();
-        }
+  
 
         [When(@"I enter a valid arrival location (.*)")]
         public void WhenIEnterAValidArrivalLocationTempleUndergroundStation(string arrival)
@@ -47,17 +45,84 @@ namespace TFLCodingChallenge.StepDefinitions
             HomePage.AddToLocation(arrival);
         }
 
+        [Then(@"Arriving option is disapled")]
+        public void ThenArrivingOptionIsDisapled()
+        {
+            HomePage.VerifyArrivalOption();
+
+        }
+
+
         [When(@"I click plan my journey")]
         public void WhenIClickPlanMyJourney()
         {
             HomePage.ClickPlanMyJourney();
         }
 
+        [Then(@"Journey results are not displayed")]
+        public void ThenJourneyResultsAreNotDisplayed()
+        {
+            HomePage.VerifyTheErrorMessage();
+        }
+
+        [When(@"I click change time link")]
+        public void WhenIClickChangeTimeLink()
+        {
+            HomePage.ClickChangeTime();
+        }
+
+
         [Then(@"verify the journey results for the valid locations")]
         public void ThenVerifyTheJourneyResultsForTheValidLocations()
         {
             JourneyResultsPage.VerifyResults();
         }
+    
+
+        [When(@"I click first journey for  departure (.*)")]
+        public void WhenIClickFirstJourneyForDepartureWaterloo(string departure)
+        {
+            JourneyResultsPage.GetAllJourneyResults_departure(departure);
+        }
+
+        [When(@"I click first journey for arrival (.*)")]
+        public void WhenIClickFirstJourneyForArrivalPaddington(string arrival)
+        {
+            JourneyResultsPage.GetAllJourneyResults_arrival(arrival);
+        }
+
+        [Then(@"No Search results message displayed")]
+        public void ThenNoSearchResultsMessageDisplayed()
+        {
+            JourneyResultsPage.NoSearchResults();
+        }
+
+        [When(@"I click Edit Journey button")]
+        public void WhenIClickEditJourneyButton()
+        {
+            JourneyResultsPage.ClickEditJourneyButton();
+        }
+
+
+        [When(@"I edit departure location to (.*)")]
+        public void WhenIEditDepartureLocationToBayswaterUndergroundStation(string newLocation)
+        {
+            JourneyResultsPage.FromLocation(newLocation);
+        }
+
+
+        [When(@"I click Update Journey button")]
+        public void WhenIClickUpdateJourneyButton()
+        {
+            JourneyResultsPage.ClickUpdateJourney();
+        }
+
+        [Then(@"I verify the (.*)  is updated")]
+        public void ThenIVerifyTheBayswaterUndergroundStationIsUpdated(string updatedLocation)
+        {
+            JourneyResultsPage.VerifyUpdatedJourney(updatedLocation);
+        }
+
 
     }
 }

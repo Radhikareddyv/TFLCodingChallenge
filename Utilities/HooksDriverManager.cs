@@ -29,6 +29,7 @@ namespace TFLCodingChallenge.Utilities
             //chromeOptions.AddArgument("--headless");
             chromeOptions.AddArgument("--incognito");
             _driver = new ChromeDriver(chromeOptions);
+            _driver.Manage().Window.Maximize();
         }
     }
 }
