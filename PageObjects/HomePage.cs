@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V117.Debugger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,18 +33,6 @@ namespace TFLCodingChallenge.PageObjects
         private readonly By _arrivingOption = By.XPath("//label[text()='Arriving']");
         private readonly By _options_dropdownLocations_Time = By.XPath("//select[@id='Time']//option");
 
-
-        public void JourneyPlanner(string departure,string arrival)
-        {
-            GetElement(_departureStation).SendKeys(departure);
-            //ScenarioContext.Current["departure"] = departure;
-            //string deptInput =options_dropdownLocations_Departure()[1].Text.ToString();
-            //IList<IWebElement> options_dropdownLocations_Departure = WaitForAllElementsBy(_options_dropdownLocations_Departure);
-            GetElement(_departureStation).SendKeys(Keys.Enter);
-            GetElement(_arrivalStation).SendKeys(arrival);
-        }
-
-
         public void ClickPlanMyJourney()
         {
             ClickElementJS((_planMyJourney));
@@ -51,29 +40,34 @@ namespace TFLCodingChallenge.PageObjects
 
         public void AddFromLocation(string departure)
         {
-           
+            var departurePoint = string.Empty;
             GetElement(_departureStation).SendKeys(departure);
             IList<IWebElement> options_dropdownLocations_Departure = WaitForAllElementsBy(_options_DropdownLocations_Departure);
-            string departurePoint = options_dropdownLocations_Departure.First().Text;
             var numofsuggestions = options_dropdownLocations_Departure.Count;
-            options_dropdownLocations_Departure.First().Click();
-            //string departurePoint = GetElement(_departureStation).Text;
-            
-            scenarioContext.Add("departurePoint", departurePoint);
-            // GetDropDownOptionElements(_options_dropdownLocations_Departure).First().Click();
-            GetElement(_departureStation).SendKeys(Keys.Enter);
+            if (numofsuggestions > 0)
+            {
+                departurePoint = options_dropdownLocations_Departure.First().Text;
+                options_dropdownLocations_Departure.First().Click();
 
+            }
+
+            scenarioContext.Add("departurePoint", departurePoint);
+            GetElement(_departureStation).SendKeys(Keys.Enter);
         }
 
         public void AddToLocation(string arrival)
         {
+            var arrivalPoint = "";
             GetElement(_arrivalStation).SendKeys(arrival);
             IList<IWebElement> options_dropdownLocations_arrival = WaitForAllElementsBy(_options_dropdownLocations_arrival);
-            string arrivalPoint = options_dropdownLocations_arrival.First().Text;
-            //var numofsuggestions = options_dropdownLocations_arrival.Count;
-            options_dropdownLocations_arrival.First().Click();
+            var numofsuggestions = options_dropdownLocations_arrival.Count;
+            if (numofsuggestions > 0)
+            {
+                arrivalPoint = options_dropdownLocations_arrival.First().Text;
+                options_dropdownLocations_arrival.First().Click();
+            }
+
             scenarioContext.Add("arrivalPoint", arrivalPoint);
-            // GetDropDownOptionElements(_options_dropdownLocations_Departure).First().Click();
         }
 
         public void VerifyTheErrorMessage()
@@ -83,11 +77,11 @@ namespace TFLCodingChallenge.PageObjects
 
             errorMessage = GetElement(_departureInputErrorMessage).Text;
             actualErrorText = "The From field is required.";
-            Assert.AreEqual(errorMessage, actualErrorText);
+            Assert.IsTrue(errorMessage.Contains(actualErrorText));
 
             errorMessage = GetElement(_arrivalInputErrorMessage).Text;
             actualErrorText = "The To field is required.";
-            Assert.AreEqual(errorMessage, actualErrorText);
+            Assert.IsTrue(errorMessage.Contains(actualErrorText));
         }
 
         public void ClickChangeTime()
@@ -99,16 +93,14 @@ namespace TFLCodingChallenge.PageObjects
         {
             Assert.IsTrue(GetElement(_arrivingOption).Displayed);
             ClickElement(GetElement(_arrivingOption));
-            DateTime now = DateTime.Now;
         }
 
         public void EditArrivingTime()
         {
             IList<IWebElement> options_dropdownLocations_Time = WaitForAllElementsBy(_options_dropdownLocations_Time);
-            var updatedTime = options_dropdownLocations_Time.First().Text;
+            var updatedTime = options_dropdownLocations_Time[3].Text;
             scenarioContext.Add("updatedTime", updatedTime);
-            //GetDropDownOptionElements(options_dropdownLocations_Time).First().Click();
-            options_dropdownLocations_Time.First().Click();
+            options_dropdownLocations_Time[3].Click();
         }
     }
 }

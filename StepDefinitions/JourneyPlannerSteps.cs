@@ -11,7 +11,6 @@ using TFLCodingChallenge.Utilities;
 namespace TFLCodingChallenge.StepDefinitions
 {
     [Binding]
-
     public class JourneyPlannerSteps : BasePage
     {
         private readonly ScenarioSettings _scenarioSettings;
@@ -22,8 +21,8 @@ namespace TFLCodingChallenge.StepDefinitions
             ConfigData = Hooks.GetApplicationConfiguration();
             _scenarioSettings = scenarioSettings;
             scenariocontext = context;
-          
         }
+
         [Given(@"I navigated to TFL website")]
         public void GivenINavigatedToTFLWebsite()
         {
@@ -37,8 +36,6 @@ namespace TFLCodingChallenge.StepDefinitions
             HomePage.AddFromLocation(departure);
         }
 
-  
-
         [When(@"I enter a valid arrival location (.*)")]
         public void WhenIEnterAValidArrivalLocationTempleUndergroundStation(string arrival)
         {
@@ -49,7 +46,6 @@ namespace TFLCodingChallenge.StepDefinitions
         public void ThenArrivingOptionIsDisaplayed()
         {
             HomePage.VerifyArrivalOption();
-
         }
 
         [Then(@"I edit the Arriving time")]
@@ -57,7 +53,6 @@ namespace TFLCodingChallenge.StepDefinitions
         {
             HomePage.EditArrivingTime();
         }
-
 
         [When(@"I click plan my journey")]
         public void WhenIClickPlanMyJourney()
@@ -77,31 +72,16 @@ namespace TFLCodingChallenge.StepDefinitions
             HomePage.ClickChangeTime();
         }
 
-
         [Then(@"verify the journey results for the valid locations")]
         public void ThenVerifyTheJourneyResultsForTheValidLocations()
         {
-            JourneyResultsPage.VerifyResults();
+            JourneyResultsPage.VerifyJourneyResults();
         }
 
         [Then(@"Verify Arriving time on Journey results page")]
         public void ThenVerifyArrivingTimeOnJourneyResultsPage()
         {
             JourneyResultsPage.VerifyArrvingTime();
-        }
-
-
-
-        [When(@"I click first journey for  departure (.*)")]
-        public void WhenIClickFirstJourneyForDepartureWaterloo(string departure)
-        {
-            JourneyResultsPage.GetAllJourneyResults_departure(departure);
-        }
-
-        [When(@"I click first journey for arrival (.*)")]
-        public void WhenIClickFirstJourneyForArrivalPaddington(string arrival)
-        {
-            JourneyResultsPage.GetAllJourneyResults_arrival(arrival);
         }
 
         [Then(@"No Search results message displayed")]
@@ -115,14 +95,12 @@ namespace TFLCodingChallenge.StepDefinitions
         {
             JourneyResultsPage.ClickEditJourneyButton();
         }
-
-
+        
         [When(@"I edit departure location to (.*)")]
         public void WhenIEditDepartureLocationToBayswaterUndergroundStation(string newLocation)
         {
             JourneyResultsPage.FromLocation(newLocation);
         }
-
 
         [When(@"I click Update Journey button")]
         public void WhenIClickUpdateJourneyButton()
@@ -135,7 +113,5 @@ namespace TFLCodingChallenge.StepDefinitions
         {
             JourneyResultsPage.VerifyUpdatedJourney(updatedLocation);
         }
-
-
     }
 }

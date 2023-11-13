@@ -77,9 +77,9 @@ namespace TFLCodingChallenge.Features
         
         public virtual void FeatureBackground()
         {
-#line 8
+#line 7
 #line hidden
-#line 9
+#line 8
  testRunner.Given("I navigated to TFL website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
@@ -94,7 +94,7 @@ namespace TFLCodingChallenge.Features
             argumentsOfScenario.Add("FromLocation", fromLocation);
             argumentsOfScenario.Add("ToLocation", toLocation);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Journey Planner Widget with valid locations", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 11
+#line 10
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -104,19 +104,19 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
+#line 7
 this.FeatureBackground();
 #line hidden
-#line 12
+#line 11
  testRunner.When(string.Format("I enter a valid departure location {0}", fromLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 13
+#line 12
  testRunner.And(string.Format("I enter a valid arrival location {0}", toLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 14
+#line 13
  testRunner.And("I click plan my journey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 17
+#line 14
  testRunner.Then("verify the journey results for the valid locations", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -125,7 +125,7 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Journey Planner Widget with Invalid locations")]
-        [NUnit.Framework.TestCaseAttribute("xxx", "123", null)]
+        [NUnit.Framework.TestCaseAttribute("123", "123", null)]
         public void VerifyJourneyPlannerWidgetWithInvalidLocations(string fromLocation, string toLocation, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -133,7 +133,7 @@ this.FeatureBackground();
             argumentsOfScenario.Add("FromLocation", fromLocation);
             argumentsOfScenario.Add("ToLocation", toLocation);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Journey Planner Widget with Invalid locations", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 23
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -143,19 +143,19 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
+#line 7
 this.FeatureBackground();
 #line hidden
-#line 24
+#line 20
  testRunner.When(string.Format("I enter a valid departure location {0}", fromLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 25
+#line 21
  testRunner.And(string.Format("I enter a valid arrival location {0}", toLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 26
+#line 22
  testRunner.And("I click plan my journey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 27
+#line 23
  testRunner.Then("No Search results message displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -169,6 +169,40 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Journey Planner Widget with empty locations", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 28
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 7
+this.FeatureBackground();
+#line hidden
+#line 29
+ testRunner.When("I click plan my journey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 30
+ testRunner.Then("Journey results are not displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify Edit Journey on the Journey results page")]
+        [NUnit.Framework.TestCaseAttribute("Waterloo", "Paddington", "Bayswater Underground Station", null)]
+        public void VerifyEditJourneyOnTheJourneyResultsPage(string fromLocation, string toLocation, string updatedLocation, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("FromLocation", fromLocation);
+            argumentsOfScenario.Add("ToLocation", toLocation);
+            argumentsOfScenario.Add("UpdatedLocation", updatedLocation);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Edit Journey on the Journey results page", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 32
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -179,69 +213,29 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
+#line 7
 this.FeatureBackground();
 #line hidden
 #line 33
- testRunner.When("I click plan my journey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 34
- testRunner.Then("Journey results are not displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify Edit Journey on the Journey results page")]
-        [NUnit.Framework.TestCaseAttribute("Waterloo", "Paddington", "Bayswater Underground Station", null)]
-        public void VerifyEditJourneyOnTheJourneyResultsPage(string fromLocation, string toLocation, string newLocation, string[] exampleTags)
-        {
-            string[] tagsOfScenario = exampleTags;
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("FromLocation", fromLocation);
-            argumentsOfScenario.Add("ToLocation", toLocation);
-            argumentsOfScenario.Add("NewLocation", newLocation);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Edit Journey on the Journey results page", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 36
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 8
-this.FeatureBackground();
-#line hidden
-#line 37
   testRunner.When(string.Format("I enter a valid departure location {0}", fromLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 38
+#line 34
  testRunner.And(string.Format("I enter a valid arrival location {0}", toLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 39
+#line 35
  testRunner.And("I click plan my journey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 40
- testRunner.When(string.Format("I click first journey for  departure {0}", fromLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 41
- testRunner.When(string.Format("I click first journey for arrival {0}", toLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 42
+#line 36
  testRunner.And("I click Edit Journey button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 43
- testRunner.When(string.Format("I edit departure location to {0}", newLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 37
+ testRunner.When(string.Format("I edit departure location to {0}", updatedLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 44
+#line 38
  testRunner.And("I click Update Journey button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 45
- testRunner.Then(string.Format("I verify the {0}  is updated", newLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 39
+ testRunner.Then(string.Format("I verify the {0}  is updated", updatedLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -257,7 +251,7 @@ this.FeatureBackground();
             argumentsOfScenario.Add("FromLocation", fromLocation);
             argumentsOfScenario.Add("ToLocation", toLocation);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify ChangeTime link on the journey Planner page", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 52
+#line 44
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -267,31 +261,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 8
+#line 7
 this.FeatureBackground();
 #line hidden
-#line 53
+#line 45
  testRunner.When(string.Format("I enter a valid departure location {0}", fromLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 54
+#line 46
  testRunner.And(string.Format("I enter a valid arrival location {0}", toLocation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 55
+#line 47
  testRunner.When("I click change time link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 56
+#line 48
  testRunner.Then("Arriving option is disaplayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 57
+#line 49
  testRunner.And("I edit the Arriving time", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 58
+#line 50
  testRunner.When("I click plan my journey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 59
+#line 51
  testRunner.Then("verify the journey results for the valid locations", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 60
+#line 52
  testRunner.Then("Verify Arriving time on Journey results page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

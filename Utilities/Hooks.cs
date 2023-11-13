@@ -18,7 +18,7 @@ namespace TFLCodingChallenge.Utilities
     {
         private IWebDriver _driver;
         public static ConfigData Configuration;
-        private object _driverStartedSuccessfully;
+        private bool _driverStartedSuccessfully;
         private readonly ScenarioSettings _scenarioSettings;
         private readonly IObjectContainer _objectContainer;
 
@@ -42,7 +42,8 @@ namespace TFLCodingChallenge.Utilities
         {
             _driver.Quit();
         }
-            [BeforeTestRun]
+
+        [BeforeTestRun]
         public static void BeforeTestRun()
         {
             Configuration = GetApplicationConfiguration();

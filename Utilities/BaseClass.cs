@@ -103,22 +103,6 @@ namespace TFLCodingChallenge.Utilities
             BaseWebDriverWait(waitTime).Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(locator));
         }
 
-        public IList<IWebElement> GetDropDownOptionElements(By locator, double waitTime = defaultWait)
-        {
-            IList<IWebElement> elements;
-            try
-            {
-                WaitUntilPresenceOfAllElementsLocatedBy(locator, waitTime);
-               SelectElement select = new SelectElement(_driver.FindElement(locator));
-                elements = select.Options;
-            }
-            catch (WebDriverException e)
-            {
-                throw new WebDriverException("Error when trying to get elements \n" + e);
-            }
-            return elements;
-        }
-
         public ReadOnlyCollection<IWebElement> ReturnMultipleElements(By locator, double waitTime = defaultWait)
         {
             ReadOnlyCollection<IWebElement> element;

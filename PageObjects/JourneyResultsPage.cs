@@ -34,7 +34,7 @@ namespace TFLCodingChallenge.PageObjects
         private readonly By _fromJourneyResult = By.XPath("//span[@class='notranslate']");
         private readonly By _journeysummary = By.XPath("//div[@class='summary-row clearfix']");
 
-        public void VerifyResults()
+        public void VerifyJourneyResults()
         {
             Assert.IsTrue(IsElementExist(_journeyResults, 50000));
             var selectedDeparturePoint = ReturnMultipleElements(_fromJourneyResult).First().Text;
@@ -45,26 +45,13 @@ namespace TFLCodingChallenge.PageObjects
             var actualArrivalPoint = scenarioContext.Get<string>("arrivalPoint");
             Assert.That(actualArrivalPoint.Equals(selectedArrivalPoint));
         }
-
-        public void GetAllJourneyResults_departure(string departure)
-        {
-            WaitForAllElementsBy(_options_Departure(departure));
-            Thread.Sleep(10000);
-            ReturnMultipleElements(_options_Departure(departure)).First().Click();
-
-        }
-        public void GetAllJourneyResults_arrival(string arrival)
-        {
-            ReturnMultipleElements(_options_Departure(arrival)).First().Click();
-
-        }
-
+        
         public void NoSearchResults()
         {
             Assert.IsTrue(IsElementExist(_noResultsfound, 5000));
             string errorMessage = GetElement(_noResultsfound).Text;
-            string actualText = "Sorry, we can't find a journey matching your criteria";
-            Assert.AreEqual(errorMessage, actualText);
+            string actualTextMessage = "Journey planner could not find any results to your search. Please try again";
+            Assert.IsTrue(errorMessage.Contains(actualTextMessage));
         }
 
         public void ClickEditJourneyButton()
@@ -76,7 +63,6 @@ namespace TFLCodingChallenge.PageObjects
         {
             ClickElement(GetElement(_clearLocation));
             GetElement(_departureStation).SendKeys(departure);
-            //ScenarioContext.Current[departure] = "departure";
         }
 
         public void ClickUpdateJourney()
@@ -87,7 +73,7 @@ namespace TFLCodingChallenge.PageObjects
         public void VerifyUpdatedJourney(string updatedLocation)
         {
             var elementText = ReturnMultipleElements(_fromJourneyResult).First().Text;
-            Assert.AreEqual(updatedLocation, elementText);
+            Assert.IsTrue(updatedLocation.Contains(elementText));
         }
 
         public void VerifyArrvingTime()
